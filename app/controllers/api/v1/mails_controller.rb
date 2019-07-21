@@ -9,35 +9,35 @@ class Api::V1::MailsController < ApplicationController
         imap = Net::IMAP.new(imap_host, imap_port, imap_usessl)
         imap_user = ENV['ADDRESS']
         imap_passwd = ENV['PASSWD']
-        imap.login(imap_user,imap_passwd)
-        imap.select('INBOX')
-        ids = imap.search(['ALL'])
-        @mails = []
-        imap.fetch(ids, "RFC822").each do |mail|
-            m = Mail.new(mail.attr["RFC822"])
-            if m.multipart?
-                if m.html_part
-                    @mails.push({ 
-                        "date": m.date.to_s,
-                        "subject": m.subject,
-                        "body": m.html_part.decoded
-                    })
-                elsif m.text_part
-                    @mails.push({
-                        "date": m.date.to_s,
-                        "subject": m.subject,
-                        "body": m.text_part.decoded
-                    })
-                end
-            else
-                @mails.push({
-                    "date": m.date.to_s,
-                    "subject": m.subject,
-                    "body": m.decoded
-                })
-            end
-        end
+        # imap.login(imap_user,imap_passwd)
+        # imap.select('INBOX')
+        # ids = imap.search(['ALL'])
+        # @mails = []
+        # imap.fetch(ids, "RFC822").each do |mail|
+        #     m = Mail.new(mail.attr["RFC822"])
+        #     if m.multipart?
+        #         if m.html_part
+        #             @mails.push({ 
+        #                 "date": m.date.to_s,
+        #                 "subject": m.subject,
+        #                 "body": m.html_part.decoded
+        #             })
+        #         elsif m.text_part
+        #             @mails.push({
+        #                 "date": m.date.to_s,
+        #                 "subject": m.subject,
+        #                 "body": m.text_part.decoded
+        #             })
+        #         end
+        #     else
+        #         @mails.push({
+        #             "date": m.date.to_s,
+        #             "subject": m.subject,
+        #             "body": m.decoded
+        #         })
+        #     end
+        # end
 
-        render json: { status: 'success', message: 'loaded latest 20 mails', data: @mails}
+        render json: { status: 'success', message: 'loaded latest 20 mails', data: imap_user}
     end
 end
