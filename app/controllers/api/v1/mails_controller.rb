@@ -3,10 +3,10 @@ class Api::V1::MailsController < ApplicationController
     require 'mail'
     def index
         # imap
-        imap_host = 'imap.gmail.com'
-        imap_usessl = true
-        imap_port = 993
-        imap = Net::IMAP.new(imap_host, imap_port, imap_usessl)
+        # imap_host = 'imap.gmail.com'
+        # imap_usessl = true
+        # imap_port = 993
+        # imap = Net::IMAP.new(imap_host, imap_port, imap_usessl)
         imap_user = ENV['ADDRESS']
         imap_passwd = ENV['PASSWD']
         # imap.login(imap_user,imap_passwd)
